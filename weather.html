@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script
+		src="https://code.jquery.com/jquery-3.1.1.js" integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA=" crossorigin="anonymous"></script>
+	<!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <style>
+    	.jumbotron{
+    		background-color: #60c2ff;
+    	}
+    </style>
+	<!-- 
+	WEATHER ASSIGNMENT:
+	-
+	Your goal: Build a simple weather website using data from an api. 
+	-
+	Using jquery, build out the html and content of your page to display the weather data from at least one location (there are ten in the API) but feel free to go wild and do the rest. 
+	-
+	here is the link to the api: 
+	http://api.geonames.org/weatherJSON?north=41&south=39&east=-104&west=-106&username=ertyseidohl
+	-
+	The beginnings of this code are located below:
+	-
+	 -->
+</head>
+<body>
+
+	<div class="jumbotron">
+		<div class="container">
+			<h1>Weather World!</h1>
+			<p>Party Time. Excellent!</p>
+			<button id="update" class="btn btn-default btn-lg">Update Now</button>
+		</div>
+	</div>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<table class="table table-striped">
+					<tr>
+						<th>Station Name</th>
+						<th>Temperature</th>
+						<th>Dew Point</th>
+						<th>Humidity</th>
+						<th>Clouds</th>
+						<th>Wind Speed</th>
+						<th>Wind Direction</th>
+						<th>Weather Condition</th>
+						<th>Longitude</th>
+						<th>Latitude</th>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		$(document).ready(function(){
+			function getWeather(){
+				$.get('http://api.geonames.org/weatherJSON?north=41&south=39&east=-104&west=-106&username=ertyseidohl', function(res){
+					for(var key in res.weatherObservations){
+						$('table').append('<tr class="nonheader"><td>' + res.weatherObservations[key].stationName + '</td>' +
+							'<td>' + res.weatherObservations[key].temperature + '</td>' +
+							'<td>' + res.weatherObservations[key].dewPoint + '</td>' +
+							'<td>' + res.weatherObservations[key].humidity + '</td>' +
+							'<td>' + res.weatherObservations[key].clouds + '</td>' +
+							'<td>' + res.weatherObservations[key].windSpeed + '</td>' +
+							'<td>' + res.weatherObservations[key].windDirection + '</td>' +
+							'<td>' + res.weatherObservations[key].weatherCondition + '</td>' +
+							'<td>' + res.weatherObservations[key].lng + '</td>' +
+							'<td>' + res.weatherObservations[key].lat + '</td></tr>');
+					}
+				});
+			}
+			$('#update').click(function refreshWeather(){
+				$('.nonheader').empty();
+				getWeather();
+			});
+			getWeather();
+		});
+	</script>
+</body>
+</html>
